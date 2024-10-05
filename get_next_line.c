@@ -13,19 +13,26 @@
 
 char	*get_next_line(int fd)
 {
-	static char	cache_line;
-	char	*next_line;
-	char	*buffer_line;
-	int	i;
+	static 	*buffer_next_line;
+	char	*new_buffer;
+	int num_char_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return null;
-	buffer_line = (char *)malloc(BUFFER_SIZE);
-	i = 0;
-	while (read(fd, buffer_line + i, 1) > 0 && buffer_line[i] != '\n')
+
+	new_buffer = (char *)malloc(BUFFER_SIZE + 1);
+	if (!new_buffef)
+		return (0);
+	new_buffer = ft_memset(new_buffer, 0, BUFFER_SIZE + 1);
+	num_char_read = read(fd, new_buffer, BUFFER_SIZE);
+	while (num_char_read == BUFFER_SIZE && !ft_strchr(new_buffer, '\n'))
 	{
-		i++;
+		buffer_next_line = ft_strjoin(buffer_next_line, new_buffer);
+		new_buffer = ft_memset(new_buffer, 0, BUFFER_SIZE + 1);
+		num_char_read = read(fd, new_buffer, BUFFER_SIZE);
 	}
+	if ()
+	
 
 	return (next_line);
 }
