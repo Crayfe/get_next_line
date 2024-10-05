@@ -31,9 +31,12 @@ char	*get_next_line(int fd)
 		new_buffer = ft_memset(new_buffer, 0, BUFFER_SIZE + 1);
 		num_char_read = read(fd, new_buffer, BUFFER_SIZE);
 	}
-	if ()
+	if (ft_strchr(new_buffer, '\n'))
+		if (num_char_read == BUFFER_SIZE)
+
+	else
 	
 
-	return (next_line);
+	return (buffer_next_line);
 }
 
