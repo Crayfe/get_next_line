@@ -21,10 +21,18 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (0);
-	next_line = 0;
+
 	new_buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!new_buffer)
 		return (0);
+	if (!buffer_next_line)
+	{
+		buffer_next_line = (char *)malloc(1);
+		if (!buffer_next_line)
+			return (0);
+		*buffer_next_line = 0;
+	}
+	next_line = 0;
 	new_buffer = ft_memset(new_buffer, 0, BUFFER_SIZE + 1);
 	num_char_read = read(fd, new_buffer, BUFFER_SIZE);
 	while (num_char_read == BUFFER_SIZE && !ft_strchr(new_buffer, '\n'))
