@@ -32,6 +32,14 @@ char	*get_next_line(int fd)
 			return (0);
 		*buffer_next_line = 0;
 	}
+	else
+	{
+		if (ft_strchr(buffer_next_line, '\n'))
+		{
+			next_line = ;
+			return (next_line);
+		}
+	}
 	next_line = 0;
 	new_buffer = ft_memset(new_buffer, 0, BUFFER_SIZE + 1);
 	num_char_read = read(fd, new_buffer, BUFFER_SIZE);
@@ -55,7 +63,7 @@ char	*get_next_line(int fd)
 	{
 		next_line = ft_strjoin(buffer_next_line, new_buffer + ft_strchr(new_buffer, '\n'));
 		free(buffer_next_line);
-		buffer_next_line = ft_substr(new_buffer + ft_strchr(new_buffer, '\n'));
+		buffer_next_line = ft_substr(new_buffer, ft_strchr(new_buffer, '\n') + 1, ft_strlen(new_buffer, ft_strchr(new_buffer, '\n')));
 	}
 	free(new_buffer);
 	return (next_line);
