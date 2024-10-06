@@ -12,6 +12,17 @@
 #include "get_next_line.h"
 
 /*	AUXILIAR FUNCTIONS	*/
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*aux_s;
+
+	i = 0;
+	aux_s = (unsigned char *)s;
+	while (i < n)
+		aux_s[i++] = c;
+	return (s);
+}
 size_t	ft_strlen(const char *str)
 {
 	size_t	i;
