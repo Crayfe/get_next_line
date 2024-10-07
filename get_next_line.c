@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
+#inlude <stdio.h>
 
 char	*get_next_line(int fd)
 {
