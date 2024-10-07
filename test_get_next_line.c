@@ -9,13 +9,9 @@
 /*   Updated: 2024/10/04 12:59:54 by cayuso-f         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-//#include "get_next_line.h"
+#include "get_next_line.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <fcntl.h>
-#define BUFFER_SIZE 150
-
 
 /*	AUXILIAR FUNCTIONS	*/
 void	*ft_memset(void *s, int c, size_t n)
