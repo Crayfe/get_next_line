@@ -8,7 +8,7 @@ OBJS = $(SRCS:.c=.o)
 
 BONUSOBJS = $(BONUSSRCS:.c=.o)
 
-NAME = libft.a
+NAME = get_next_line
 
 RM = rm -f
 
@@ -17,7 +17,6 @@ AR = ar rcs
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
