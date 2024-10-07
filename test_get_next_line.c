@@ -156,12 +156,14 @@ char	*get_next_line(int fd)
 	else
 	{
 		printf("SOME IN BUFFER: %s\n", buffer_next_line);
+		printf("strlen_buffer: %zu\n", ft_strlen(buffer_next_line, 0));
 		if (ft_strchr(buffer_next_line, '\n'))
 		{
 			next_line = ft_substr(buffer_next_line, 0, ft_strlen(buffer_next_line, '\n') + 1);
 			buffer_to_free = buffer_next_line;
 			buffer_next_line = ft_substr(buffer_to_free, ft_strlen(buffer_next_line, '\n') + 1, ft_strlen(buffer_next_line, 0));
 			free(buffer_to_free);
+			
 			return (next_line);
 		}
 	}
@@ -169,6 +171,18 @@ char	*get_next_line(int fd)
 	new_buffer = ft_memset(new_buffer, 0, BUFFER_SIZE + 1);
 	num_char_read = read(fd, new_buffer, BUFFER_SIZE);
 	printf("NUM CHAR READ: %i\n", num_char_read);
+	if (num_char_read <= 0)
+	{
+		if(buffer_next_line && ft_strlen(buffer_next_line, 0) > 0)
+		{
+			next_line = ft_strjoin(buffer_next_line, "\n");
+			free(buffer_next_line);
+			buffer_next_line = 0;
+			return (next_line);
+		}
+		free(buffer_next_line);
+		return (0);
+	}
 	while (num_char_read == BUFFER_SIZE && !ft_strchr(new_buffer, '\n'))
 	{
 		buffer_to_free	= buffer_next_line;
@@ -211,9 +225,15 @@ int	main(void){
 	fd = open("file_test", 0);
 	if (fd > 0)
 	{
-		while (i < 23)
+		while (i < 29)
 		{
 			line = get_next_line(fd);
+			if (!line)
+			{
+				printf("End of file\n");
+				close(fd);
+				return (0);
+			}
 			printf("Line: %s\n", line);
 			free(line);
 			i++;
