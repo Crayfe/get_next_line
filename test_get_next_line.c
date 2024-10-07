@@ -24,5 +24,6 @@ int	main(void){
 		printf("Line: %s\n", line);
 		free(line);
 	}
+	close(fd);
 	return (0);
 }
