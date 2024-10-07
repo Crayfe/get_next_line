@@ -23,12 +23,12 @@ void	*ft_memset(void *s, int c, size_t n)
 		aux_s[i++] = c;
 	return (s);
 }
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str, char c)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] != c)
 		i++;
 	return (i);
 }
