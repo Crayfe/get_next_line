@@ -36,7 +36,10 @@ char	*get_next_line(int fd)
 	{
 		if (ft_strchr(buffer_next_line, '\n'))
 		{
-			next_line = ;
+			next_line = ft_substr(buffer_next_line, 0, ft_strchr(buffer_next_line, '\n') + 1);
+			buffer_to _free = buffer_next_line;
+			buffer_next_line = ft_substr(buffer_next_line, ft_strchr(buffer_next_line, '\n') + 2, ft_strlen(buffer_next_line) - ft_strchr(buffer_next_line, '\n') - 2);
+			free(buffer_to_free);
 			return (next_line);
 		}
 	}
