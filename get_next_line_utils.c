@@ -56,14 +56,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (0);
-	if ((size_t) start > ft_strlen(s))
+	if ((size_t) start > ft_strlen(s, 0))
 	{
 		sub = (char *)malloc(1);
 		*sub = 0;
 		return (sub);
 	}
-	if (len > ft_strlen(s) - (size_t) start)
-		aux_len = ft_strlen(s) - (size_t) start;
+	if (len > ft_strlen(s, 0) - (size_t) start)
+		aux_len = ft_strlen(s, 0) - (size_t) start;
 	else
 		aux_len = len;
 	sub = (char *)malloc(aux_len + 1);
@@ -78,7 +78,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	size_t	i;
 
 	if (size == 0)
-		return (ft_strlen(src));
+		return (ft_strlen(src, 0));
 	i = 0;
 	while (src[i] && i < (size - 1))
 	{
@@ -94,8 +94,8 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	i;
 	size_t	k;
 
-	i = ft_strlen(dst);
-	k = ft_strlen(src);
+	i = ft_strlen(dst, 0);
+	k = ft_strlen(src, 0);
 	if ((!dst || !src) && size == 0)
 		return (0);
 	if (size < i)
@@ -112,8 +112,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (0);
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = ft_strlen(s1, 0);
+	len2 = ft_strlen(s2, 0);
 	join = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 	if (!join)
 		return (0);
