@@ -23,6 +23,7 @@ void	*ft_memset(void *s, int c, size_t n)
 		aux_s[i++] = c;
 	return (s);
 }
+
 size_t	ft_strlen(const char *str, char c)
 {
 	size_t	i;

@@ -13,11 +13,11 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-int	main(void){
-
-	int	fd;
+int	main(void)
+{
+	int		fd;
 	char	*line;
-	int	i;
+	int		i;
 
 	i = 0;
 	fd = open("file_test", 0);
@@ -28,11 +28,11 @@ int	main(void){
 			line = get_next_line(fd);
 			if (!line)
 			{
-				printf("End of file\n");
+				printf("\033[0;32mEnd of file\n");
 				close(fd);
 				return (0);
 			}
-			printf("Line: %s\n", line);
+			printf("\033[0;32mLine: %s\n", line);
 			free(line);
 			i++;
 		}
