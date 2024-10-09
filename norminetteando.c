@@ -16,11 +16,25 @@ char    *read_buffer(char *buffer, char c)
 {
     char    *next_line;
     int     pos;
+    int     i;
 
     pos = ft_strlen(buffer, c);
-    next_line = ft_substr(buffer, 0, pos + 1);
+    if (c == '\n')
+        next_line = ft_substr(buffer, 0, pos + 1);
+    else
+        next_line = ft_substr(buffer, 0, pos);
+    i = 0;
     if (ft_strlen(buffer + pos, 0))
-
+    {
+        while (buffer[pos + i])
+        {
+            buffer[i] = buffer[pos + i];
+            i++;
+        {
+        ft_memset(buffer + i, 0, BUFFER_SIZE + 1 - i);
+    }
+    else
+        ft_memset(buffer, 0, BUFFER_SIZE + 1);
     return (next_line);
 }
 char    *get_next_line(int fd)
