@@ -62,12 +62,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		aux_len = ft_strlen(s, 0) - (size_t) start;
 	else
 		aux_len = len;
-	if ((size_t) start > ft_strlen(s, 0))
-	{
-		sub = (char *)malloc(1);
-		*sub = 0;
-		return (sub);
-	}
 	sub = (char *)malloc(aux_len + 1);
 	if (!sub)
 		return (0);
