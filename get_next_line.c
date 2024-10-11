@@ -38,35 +38,29 @@ char	*read_buffer(char *buffer, char c)
 	return (next_line);
 }
 
-char	*read_endcases(char *buffer, char *next_line)
+char	*read_endcases(char *buffer, char *next_line, char *to_free)
 {
-	if (!ft_strlen(buffer, 0))
+	if (ft_strlen(buffer, 0))
 	{
-		if (*next_line)
-		{
-			next_line = ft_strjoin(next_line, "\n");
-			return (next_line);
-		}
+		if (ft_strchr(buffer, '\n'))
+			to_free = read_buffer(buffer, '\n');
 		else
-			free(next_line);
-		return (0);
+			to_free = read_buffer(buffer, 0);
+		next_line = ft_strjoin(next_line, to_free);
+		free(to_free);
 	}
-	else
+	else if (*next_line == 0)
 	{
-		if (!ft_strchr(buffer, '\n'))
-		{
-			next_line = ft_strjoin(next_line, buffer);
-			next_line = ft_strjoin(next_line, "\n");
-			ft_memset(buffer, 0, BUFFER_SIZE + 1);
-		}
-		else
-			next_line = ft_strjoin(next_line, read_buffer(buffer, '\n'));
+		free(next_line);
+		next_line = 0;
 	}
 	return (next_line);
 }
 
-char	*read_line(char *buffer, char *next_line, int fd, int rd_chars)
+char	*read_line(char *buffer, char *next_line, int fd, size_t rd_chars)
 {
+	char	*to_free;
+
 	rd_chars = read(fd, buffer, BUFFER_SIZE);
 	while (rd_chars == BUFFER_SIZE && !ft_strchr(buffer, '\n'))
 	{
@@ -75,11 +69,13 @@ char	*read_line(char *buffer, char *next_line, int fd, int rd_chars)
 		rd_chars = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (rd_chars < BUFFER_SIZE)
-	{
-		next_line = read_endcases(buffer, next_line);
-	}
+		next_line = read_endcases(buffer, next_line, 0);
 	else
-		next_line = ft_strjoin(next_line, read_buffer(buffer, '\n'));
+	{
+		to_free = read_buffer(buffer, '\n');
+		next_line = ft_strjoin(next_line, to_free);
+		free(to_free);
+	}
 	return (next_line);
 }
 
@@ -87,7 +83,7 @@ char	*get_next_line(int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*next_line;
-	int			rd_chars;
+	char		*to_free;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (0);
@@ -95,17 +91,16 @@ char	*get_next_line(int fd)
 	*next_line = 0;
 	if (ft_strlen(buffer, 0))
 	{
+		to_free = next_line;
 		if (ft_strchr(buffer, '\n'))
 			next_line = read_buffer(buffer, '\n');
 		else
 			next_line = read_buffer(buffer, 0);
+		free(to_free);
 	}
 	if (next_line && ft_strchr(next_line, '\n'))
 		return (next_line);
 	else
-	{
-		rd_chars = 0;
-		next_line = read_line(buffer, next_line, fd, rd_chars);
-	}
+		next_line = read_line(buffer, next_line, fd, 0);
 	return (next_line);
 }
