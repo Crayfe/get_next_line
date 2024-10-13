@@ -78,27 +78,27 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 char	*ft_strjoin(char *s1, char const *s2)
 {
 	char	*join;
-	size_t	i;
+	int		i;
+	size_t	len1;
+	size_t	len2;
 
 	if (!s1 || !s2)
 		return (0);
-	join = (char *)malloc((ft_strlen(s1, 0)
-				+ ft_strlen(s2, 0) + 1) * sizeof(char));
+	len1 = ft_strlen(s1, 0);
+	len2 = ft_strlen(s2, 0);
+	join = (char *)malloc((len1 + len2 + 1));
 	if (!join)
 		return (0);
-	i = 0;
-	while (s1[i] && i < ft_strlen(s1, 0))
-	{
+	i = -1;
+	while (s1[++i])
 		join[i] = s1[i];
-		i++;
-	}
-	while (s2[i - ft_strlen(s1, 0)]
-		&& i < (ft_strlen(s1, 0) + ft_strlen(s2, 0)))
+	i = -1;
+	while (s2[++i])
 	{
-		join[i] = s2[i - ft_strlen(s1, 0)];
-		i++;
+		join[len1] = s2[i];
+		len1++;
 	}
-	join[i] = '\0';
+	join[len1] = '\0';
 	free(s1);
 	return (join);
 }
