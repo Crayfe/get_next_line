@@ -86,7 +86,10 @@ char	*get_next_line(int fd)
 	char		*to_free;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		ft_memset(buffer, 0, BUFFER_SIZE + 1);
 		return (0);
+	}
 	next_line = malloc(1);
 	*next_line = 0;
 	if (ft_strlen(buffer, 0))
