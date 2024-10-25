@@ -57,16 +57,22 @@ char	*read_endcases(char *buffer, char *next_line, char *to_free)
 	return (next_line);
 }
 
-char	*read_line(char *buffer, char *next_line, int fd, size_t rd_chars)
+char	*read_line(char *buffer, char *next_line, int fd, int rd_chars)
 {
+	int		not_found_n;
 	char	*to_free;
 
-	rd_chars = read(fd, buffer, BUFFER_SIZE);
-	while (rd_chars == BUFFER_SIZE && !ft_strchr(buffer, '\n'))
+	not_found_n = 1;
+	while (not_found_n)
 	{
-		next_line = ft_strjoin(next_line, buffer);
-		ft_memset(buffer, 0, BUFFER_SIZE + 1);
 		rd_chars = read(fd, buffer, BUFFER_SIZE);
+		if (rd_chars == BUFFER_SIZE && !ft_strchr(buffer, '\n'))
+		{
+			next_line = ft_strjoin(next_line, buffer);
+			ft_memset(buffer, 0, BUFFER_SIZE + 1);
+		}
+		else
+			not_found_n = 0;
 	}
 	if (rd_chars < BUFFER_SIZE)
 		next_line = read_endcases(buffer, next_line, 0);
