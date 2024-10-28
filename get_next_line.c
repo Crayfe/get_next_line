@@ -58,23 +58,23 @@ char	*read_endcases(char *buffer, char *next_line, char *to_free)
 }
 
 char	*read_line(char *buffer, char *next_line, int fd, int rd_chars)
-{
-	int		not_found_n;
+{	
 	char	*to_free;
 
-	not_found_n = 1;
-	while (not_found_n)
+	rd_chars = read(fd, buffer, BUFFER_SIZE);
+	while (rd_chars == BUFFER_SIZE && !ft_strchr(buffer, '\n'))
 	{
+		next_line = ft_strjoin(next_line, buffer);
+		ft_memset(buffer, 0, BUFFER_SIZE + 1);
 		rd_chars = read(fd, buffer, BUFFER_SIZE);
-		if (rd_chars == BUFFER_SIZE && !ft_strchr(buffer, '\n'))
-		{
-			next_line = ft_strjoin(next_line, buffer);
-			ft_memset(buffer, 0, BUFFER_SIZE + 1);
-		}
-		else
-			not_found_n = 0;
 	}
-	if (rd_chars < BUFFER_SIZE)
+	if (rd_chars < 0)
+	{
+		ft_memset(buffer, 0, BUFFER_SIZE + 1);
+		free(next_line);
+		next_line = 0;
+	}
+	else if (rd_chars >= 0 && rd_chars < BUFFER_SIZE)
 		next_line = read_endcases(buffer, next_line, 0);
 	else
 	{
@@ -91,7 +91,7 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	char		*to_free;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
 		ft_memset(buffer, 0, BUFFER_SIZE + 1);
 		return (0);
