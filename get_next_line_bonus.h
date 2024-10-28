@@ -22,8 +22,8 @@
 
 typedef struct s_fd_buffer
 {
-	void			*content;
-	struct s_list	*next;
+	int	fd[3];
+	char	buffer[3][BUFFER_SIZE + 1]	
 }	t_fd_bf;
 
 void	*ft_memset(void *s, int c, size_t n);
