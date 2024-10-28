@@ -17,15 +17,22 @@ char	*get_buffer(int fd, t_fd_bf *bf)
 	int	i;
 	char	*buffer;
 
+	buffer = 0;
 	i = 0;
-	while (i++ < 3)
-		if (bf->fd[i] == fd)
-			buffer = bf->buffer[i]
-		else if (bf->fd[i])
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		ft_memset(buffer, 0, BUFFER_SIZE + 1);
 		return (0);
+	}
+	while (i++ < 3)
+	{
+		if (bf->fd[i] == fd)
+			buffer = bf->buffer[i]
+		else if (ft_strlen(bf->buffer[i], 0) == 0)
+		{
+			bf->fd[i] = fd;
+			buffer = bf->buffer[i];
+		}
 	}
 	return (buffer);
 }
@@ -112,10 +119,10 @@ char	*get_next_line(int fd)
 	char		*to_free;
 
 	buffer = get_buffer(fd, &bf);
-	*next_line = 0;
 	if (!buffer)
 		return (0);
 	next_line = malloc(1);
+	*next_line = 0;
 	if (ft_strlen(buffer, 0))
 	{
 		to_free = next_line;
