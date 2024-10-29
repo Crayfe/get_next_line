@@ -58,7 +58,7 @@ char	*read_endcases(char *buffer, char *next_line, char *to_free)
 }
 
 char	*read_line(char *buffer, char *next_line, int fd, int rd_chars)
-{	
+{
 	char	*to_free;
 
 	rd_chars = read(fd, buffer, BUFFER_SIZE);
