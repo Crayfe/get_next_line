@@ -12,35 +12,23 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC_DIR = src
-TEST_DIR = test
+NAME = get_next_line.a
 
-TEST_SRCS = $(TEST_DIR)/test_get_next_line.c
-TEST_OBJS = $(TEST_SRCS:.c=.o)
+SRC = get_next_line_utils.c get_next_line.c
+OBJ = $(SRC:.c=.o)
 
-LIB_NAME = $(SRC_DIR)/get_next_line.a
-NAME = test_get_next_line
+all	:	$(NAME)
 
-all: $(NAME)
+$(NAME)	:	$(OBJ) 
+		ar rcs $(NAME) $(OBJ)
 
-$(NAME): $(TEST_OBJS) $(LIB_NAME)
-	$(CC) $(CFLAGS) $^ -o $@
+clean	:
+		rm -f $(OBJ)
 
-$(TEST_DIR)/%.o: $(TEST_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+fclean	: 	clean
+		rm -f $(NAME)
 
-$(LIB_NAME):
-	@echo "Compiling GNL..."
-	$(MAKE) -C $(SRC_DIR)
+re	: 	fclean all
 
-clean:
-	rm -f $(TEST_OBJS)
-	$(MAKE) clean -C $(SRC_DIR)
-
-fclean: clean
-	rm -f $(NAME)
-	$(MAKE) fclean -C $(SRC_DIR)
-
-re: fclean all
-
+.DEFAULT_GOAL := all
 .PHONY: all clean fclean re
